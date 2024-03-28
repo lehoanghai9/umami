@@ -202,6 +202,7 @@ export interface QueryFilters {
   unit?: string;
   eventType?: number;
   url?: string;
+  urls?: string[];
   referrer?: string;
   title?: string;
   query?: string;

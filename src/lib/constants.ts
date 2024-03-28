@@ -46,6 +46,7 @@ export const SESSION_COLUMNS = [
 
 export const FILTER_COLUMNS = {
   url: 'url_path',
+  urls: 'url_path',
   referrer: 'referrer_domain',
   title: 'page_title',
   query: 'url_query',
@@ -85,6 +86,7 @@ export const OPERATORS = {
   contains: 'c',
   doesNotContain: 'dnc',
   true: 't',
+  in: 'in',
   false: 'f',
   greaterThan: 'gt',
   lessThan: 'lt',

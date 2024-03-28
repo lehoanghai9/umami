@@ -11,7 +11,6 @@ import useDashboard from 'store/dashboard';
 import LinkButton from 'components/common/LinkButton';
 
 export function DashboardPage() {
-  console.log('asdasd');
   const { formatMessage, labels, messages } = useMessages();
   const { teamId, renderTeamUrl } = useTeamUrl();
   const { showCharts, editing } = useDashboard();

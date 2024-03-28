@@ -76,3 +76,8 @@ export const paramFilter = (data: any[]) => {
     Object.keys(map[key]).map(n => ({ x: `${key}=${n}`, p: key, v: n, y: map[key][n] })),
   );
 };
+
+export const urlsFilter = (data?: string) => {
+  if (!data) return null;
+  return data.split('|').filter(url => url.trim() !== '');
+};

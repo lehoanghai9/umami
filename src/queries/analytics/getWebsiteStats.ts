@@ -18,7 +18,6 @@ async function relationalQuery(websiteId: string, filters: QueryFilters) {
     ...filters,
     eventType: EVENT_TYPE.pageView,
   });
-
   return rawQuery(
     `
     select

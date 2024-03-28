@@ -12,6 +12,7 @@ export interface WebsiteStatsRequestQuery {
   startAt: number;
   endAt: number;
   url?: string;
+  urls?: string;
   referrer?: string;
   title?: string;
   query?: string;
@@ -25,12 +26,14 @@ export interface WebsiteStatsRequestQuery {
 }
 
 import * as yup from 'yup';
+import { urlsFilter } from 'lib/filters';
 const schema = {
   GET: yup.object().shape({
     websiteId: yup.string().uuid().required(),
     startAt: yup.number().required(),
     endAt: yup.number().required(),
     url: yup.string(),
+    urls: yup.string().matches(/^\/[^|]+\|?(\/[^|]+\|?)*$/, 'Invalid URLs format'),
     referrer: yup.string(),
     title: yup.string(),
     query: yup.string(),
@@ -55,6 +58,7 @@ export default async (
   const {
     websiteId,
     url,
+    urls,
     referrer,
     title,
     query,
@@ -77,8 +81,11 @@ export default async (
     const prevStartDate = subMinutes(startDate, diff);
     const prevEndDate = subMinutes(endDate, diff);
 
+    const parsedUrls = urlsFilter(urls) ?? undefined;
+
     const filters = {
       url,
+      urls: parsedUrls,
       referrer,
       title,
       query,

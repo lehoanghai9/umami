@@ -105,6 +105,11 @@ function mapFilter(column: string, filter: string, name: string, type = 'varchar
   }
 }
 
+function mapsArrayFilter(names: string[], column: string) {
+  const formattedNames = names.map(name => `'${name}'`).join(',');
+  return `${column} IN (${formattedNames})`;
+}
+
 function getFilterQuery(filters: QueryFilters = {}, options: QueryOptions = {}): string {
   const query = Object.keys(filters).reduce((arr, name) => {
     const value = filters[name];
@@ -112,7 +117,11 @@ function getFilterQuery(filters: QueryFilters = {}, options: QueryOptions = {}):
     const column = value?.column ?? FILTER_COLUMNS[name] ?? options?.columns?.[name];
 
     if (value !== undefined && column !== undefined) {
-      arr.push(`and ${mapFilter(column, filter, name)}`);
+      if (name === 'urls') {
+        arr.push(`and ${mapsArrayFilter(value, column)}`);
+      } else {
+        arr.push(`and ${mapFilter(column, filter, name)}`);
+      }
 
       if (name === 'referrer') {
         arr.push(
